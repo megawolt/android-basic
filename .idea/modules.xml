@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/InteractiveUI.iml" filepath="$PROJECT_DIR$/InteractiveUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TrueFalseQuestion.iml" filepath="$PROJECT_DIR$/TrueFalseQuestion.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

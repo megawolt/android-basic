@@ -2,6 +2,7 @@ package com.example.goktu_000.interactiveui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,27 +19,27 @@ public class MainActivity extends Activity{
     private  Button nextButton;
     private TextView     Question;
 
-    int mCurrentIndex=0;
+    private static final String TAG = "QuizActivity";
+    private static final String KEY_INDEX = "index";
 
-    private TrueFalse[] mQuestionBanks = new TrueFalse[]{
-            new TrueFalse(R.string.question_oceans, true),
-            new TrueFalse(R.string.question_mideast, false),
-            new TrueFalse(R.string.question_africa, false),
-            new TrueFalse(R.string.question_americas, true),
-            new TrueFalse(R.string.question_asia, true)
-    };
+    int mCurrentIndex=0;
+   public TrueFalse ismTrueQuestion = new TrueFalse();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
 
         trueButton = (Button)findViewById(R.id.true_button);
         falseButton = (Button)findViewById(R.id.false_button);
         prevButton = (Button)findViewById(R.id.prev_button);
         nextButton = (Button)findViewById(R.id.next_button);
         Question = (TextView)findViewById(R.id.Question);
-
+        if (savedInstanceState != null) {
+            mCurrentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
         updateQuestion(mCurrentIndex);
 
         trueButton.setOnClickListener(new View.OnClickListener() {
@@ -58,28 +59,25 @@ public class MainActivity extends Activity{
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex+1) % mQuestionBanks.length;
+                mCurrentIndex = (mCurrentIndex+1) % ismTrueQuestion.getmQuestionBanks().length;
                 updateQuestion(mCurrentIndex);
             }
         });
         prevButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCurrentIndex = (mCurrentIndex-1) % mQuestionBanks.length;
+                mCurrentIndex = (mCurrentIndex-1) % ismTrueQuestion.getmQuestionBanks().length;
                 updateQuestion(mCurrentIndex);
             }
         });
 
     }
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -100,12 +98,21 @@ public class MainActivity extends Activity{
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.i(TAG,"onSaveInstanceState");
+        outState.putInt(KEY_INDEX,mCurrentIndex);
+    }
+
     private void updateQuestion(int index){
-        TrueFalse trueFalse = mQuestionBanks[index];
+        TrueFalse trueFalse;
+        trueFalse = ismTrueQuestion.getmQuestionBanks()[index];
         Question.setText(trueFalse.getmQuestion());
     }
     private void checkAnswer(boolean condition){
-        if(mQuestionBanks[mCurrentIndex].ismTrueQuestion() == condition){
+        if(ismTrueQuestion.getmQuestionBanks()[mCurrentIndex].ismTrueQuestion() == condition){
             Toast.makeText(MainActivity.this,"You're right",Toast.LENGTH_LONG).show();
             nextButton.callOnClick();
         }

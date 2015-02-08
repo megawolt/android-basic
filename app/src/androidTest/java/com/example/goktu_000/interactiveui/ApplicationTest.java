@@ -1,4 +1,4 @@
-package com.example.user.myapplication;
+package com.example.goktu_000.interactiveui;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

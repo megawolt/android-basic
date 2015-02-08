@@ -5,8 +5,8 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.example.user.myapplication"
-        minSdkVersion 15
+        applicationId "com.example.goktu_000.interactiveui"
+        minSdkVersion 17
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
